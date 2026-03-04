@@ -31,6 +31,9 @@ ENV PATH="$NVM_DIR/versions/node/v${NODE_VERSION}/bin:${PATH}"
 
 RUN npm i -g openclaw@latest
 
+# Grant claw permission to .openclaw directory
+RUN mkdir -p /home/claw/.openclaw && chown -R claw:claw /home/claw/.openclaw
+
 WORKDIR /home/claw
 
 CMD ["/bin/bash"]
