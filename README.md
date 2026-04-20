@@ -74,4 +74,3 @@ Files created by the agent in `./data` are owned by the container user. If you n
 ---
 
 > *"If it's repetitive, I'll automate it; if it's hard, I'll bring jokes and a rollback plan."* — 🦞
-

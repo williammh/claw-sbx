@@ -9,10 +9,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# create 'claw' user and group
-# create a home directory and -s to give 'claw' a shell
-RUN groupadd -r claw && useradd -r -g claw -m -s /bin/bash claw
 
+# Specify UID 1001 to match your VPS user exactly
+RUN groupadd -g 1001 claw && useradd -u 1001 -g claw -m -s /bin/bash claw
 # Create NVM directory, install NVM, and make accessible to 'claw'
 RUN mkdir -p $NVM_DIR && chown claw:claw $NVM_DIR
 
@@ -31,8 +30,8 @@ ENV PATH="$NVM_DIR/versions/node/v${NODE_VERSION}/bin:${PATH}"
 
 RUN npm i -g openclaw@latest
 
-# Grant claw permission to .openclaw directory
-RUN mkdir -p /home/claw/.openclaw && chown -R claw:claw /home/claw/.openclaw
+# Pre-create the directory so it's ready to receive the volume mount
+RUN mkdir -p /home/claw/.openclaw
 
 WORKDIR /home/claw
 
